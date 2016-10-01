@@ -2213,20 +2213,6 @@ impl Clean<PathSegment> for hir::PathSegment {
     }
 }
 
-fn path_to_string(p: &hir::Path) -> String {
-    let mut s = String::new();
-    let mut first = true;
-    for i in p.segments.iter().map(|x| x.name.as_str()) {
-        if !first || p.global {
-            s.push_str("::");
-        } else {
-            first = false;
-        }
-        s.push_str(&i);
-    }
-    s
-}
-
 impl Clean<String> for ast::Name {
     fn clean(&self, _: &DocContext) -> String {
         self.to_string()
@@ -2681,11 +2667,12 @@ fn name_from_pat(p: &hir::Pat) -> String {
     match p.node {
         PatKind::Wild => "_".to_string(),
         PatKind::Binding(_, ref p, _) => p.node.to_string(),
-        PatKind::TupleStruct(ref p, ..) | PatKind::Path(None, ref p) => path_to_string(p),
+        PatKind::TupleStruct(ref p, ..) | PatKind::Path(None, ref p) => p.to_string(),
         PatKind::Path(..) => panic!("tried to get argument name from qualified PatKind::Path, \
                                      which is not allowed in function arguments"),
         PatKind::Struct(ref name, ref fields, etc) => {
-            format!("{} {{ {}{} }}", path_to_string(name),
+            format!("{} {{ {}{} }}",
+                name,
                 fields.iter().map(|&Spanned { node: ref fp, .. }|
                                   format!("{}: {}", fp.name, name_from_pat(&*fp.pat)))
                              .collect::<Vec<String>>().join(", "),
