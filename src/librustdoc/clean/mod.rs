@@ -14,7 +14,6 @@
 pub use self::Type::*;
 pub use self::VariantKind::*;
 pub use self::Mutability::*;
-pub use self::Import::*;
 pub use self::ItemEnum::*;
 pub use self::Attribute::*;
 pub use self::TyParamBound::*;
@@ -2513,7 +2512,7 @@ impl Clean<Vec<Item>> for doctree::Import {
         });
         let (mut ret, inner) = match self.node {
             hir::ViewPathGlob(ref p) => {
-                (vec![], GlobImport(resolve_use_source(cx, p.clean(cx), self.id)))
+                (vec![], Import::Glob(resolve_use_source(cx, p.clean(cx), self.id)))
             }
             hir::ViewPathList(ref p, ref list) => {
                 // Attempt to inline all reexported items, but be sure
@@ -2539,8 +2538,8 @@ impl Clean<Vec<Item>> for doctree::Import {
                 if remaining.is_empty() {
                     return ret;
                 }
-                (ret, ImportList(resolve_use_source(cx, p.clean(cx), self.id),
-                                 remaining))
+                (ret, Import::List(resolve_use_source(cx, p.clean(cx), self.id),
+                                   remaining))
             }
             hir::ViewPathSimple(name, ref p) => {
                 if !denied {
@@ -2548,8 +2547,8 @@ impl Clean<Vec<Item>> for doctree::Import {
                         return items;
                     }
                 }
-                (vec![], SimpleImport(name.clean(cx),
-                                      resolve_use_source(cx, p.clean(cx), self.id)))
+                (vec![], Import::Simple(name.clean(cx),
+                                        resolve_use_source(cx, p.clean(cx), self.id)))
             }
         };
         ret.push(Item {
@@ -2569,11 +2568,11 @@ impl Clean<Vec<Item>> for doctree::Import {
 #[derive(Clone, RustcEncodable, RustcDecodable, Debug)]
 pub enum Import {
     // use source as str;
-    SimpleImport(String, ImportSource),
+    Simple(String, ImportSource),
     // use source::*;
-    GlobImport(ImportSource),
+    Glob(ImportSource),
     // use source::{a, b, c};
-    ImportList(ImportSource, Vec<ViewListIdent>),
+    List(ImportSource, Vec<ViewListIdent>),
 }
 
 #[derive(Clone, RustcEncodable, RustcDecodable, Debug)]
