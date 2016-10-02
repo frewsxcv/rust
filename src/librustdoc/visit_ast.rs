@@ -13,9 +13,7 @@
 
 use std::mem;
 
-use syntax::abi;
-use syntax::ast;
-use syntax::attr;
+use syntax::{self, abi, ast, attr};
 use syntax_pos::Span;
 
 use rustc::hir::map as hir_map;
@@ -44,6 +42,10 @@ pub struct RustdocVisitor<'a, 'tcx: 'a> {
     pub cx: &'a core::DocContext<'a, 'tcx>,
     view_item_stack: FnvHashSet<ast::NodeId>,
     inlining_from_glob: bool,
+}
+
+impl<'a, 'tcx> syntax::visit::Visitor for RustdocVisitor<'a, 'tcx> {
+
 }
 
 impl<'a, 'tcx> RustdocVisitor<'a, 'tcx> {
