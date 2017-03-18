@@ -8,17 +8,16 @@ git:
   depth: 1
   submodules: false
 
+branches:
+  except:
+    - /.*/
 
 matrix:
   fast_finish: true
   include:
     # Linux builders, all docker images
     - env: IMAGE=arm-android
-      branches:
-        - /auto/
     - env: IMAGE=armhf-gnu
-      branches:
-        - /auto/
     - env: IMAGE=cross DEPLOY=1
     - env: IMAGE=dist-android DEPLOY=1
     - env: IMAGE=dist-arm-linux DEPLOY=1
