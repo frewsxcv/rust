@@ -15,12 +15,10 @@ matrix:
     # Linux builders, all docker images
     - env: IMAGE=arm-android
       branches:
-        only:
-          - /auto/
+        - /auto/
     - env: IMAGE=armhf-gnu
       branches:
-        only:
-          - /auto/
+        - /auto/
     - env: IMAGE=cross DEPLOY=1
     - env: IMAGE=dist-android DEPLOY=1
     - env: IMAGE=dist-arm-linux DEPLOY=1
