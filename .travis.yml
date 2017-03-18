@@ -8,6 +8,10 @@ git:
   depth: 1
   submodules: false
 
+branches:
+  except:
+    - /.*/
+
 matrix:
   fast_finish: true
   include:
@@ -37,6 +41,9 @@ matrix:
     - env: IMAGE=x86_64-gnu-debug
     - env: IMAGE=x86_64-gnu-nopt
     - env: IMAGE=x86_64-gnu-llvm-3.7 ALLOW_PR=1 RUST_BACKTRACE=1
+      branches:
+        only:
+          - /.*/
     - env: IMAGE=x86_64-gnu-distcheck
     - env: IMAGE=x86_64-gnu-incremental
 
