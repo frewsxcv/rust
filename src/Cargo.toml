@@ -9,6 +9,7 @@ members = [
   "tools/compiletest",
   "tools/error_index_generator",
   "tools/linkchecker",
+  "tools/rfcs-book-gen",
   "tools/rustbook",
   "tools/unstable-book-gen",
   "tools/tidy",

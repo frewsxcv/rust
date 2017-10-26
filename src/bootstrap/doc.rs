@@ -101,6 +101,38 @@ impl Step for Rustbook {
 }
 
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct RfcsBook {
+    target: Interned<String>,
+}
+
+impl Step for RfcsBook {
+    type Output = ();
+    const DEFAULT: bool = true;
+
+    fn should_run(run: ShouldRun) -> ShouldRun {
+        let builder = run.builder;
+        run.path("src/doc/rfcs-book").default_condition(builder.build.config.docs)
+    }
+
+    fn make_run(run: RunConfig) {
+        run.builder.ensure(RfcsBook {
+            target: run.target,
+        });
+    }
+
+    fn run(self, builder: &Builder) {
+        builder.ensure(RfcsBookGen {
+            target: self.target,
+        });
+        builder.ensure(RustbookSrc {
+            target: self.target,
+            name: INTERNER.intern_str("rfcs-book"),
+            src: builder.build.md_doc_out(self.target),
+        })
+    }
+}
+
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub struct UnstableBook {
     target: Interned<String>,
 }
@@ -678,6 +710,48 @@ impl Step for ErrorIndex {
         index.env("CFG_BUILD", &build.build);
 
         build.run(&mut index);
+    }
+}
+
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct RfcsBookGen {
+    target: Interned<String>,
+}
+
+impl Step for RfcsBookGen {
+    type Output = ();
+    const DEFAULT: bool = true;
+    const ONLY_HOSTS: bool = true;
+
+    fn should_run(run: ShouldRun) -> ShouldRun {
+        let builder = run.builder;
+        run.path("src/tools/rfcs-book-gen").default_condition(builder.build.config.docs)
+    }
+
+    fn make_run(run: RunConfig) {
+        run.builder.ensure(RfcsBookGen {
+            target: run.target,
+        });
+    }
+
+    fn run(self, builder: &Builder) {
+        let build = builder.build;
+        let target = self.target;
+
+        builder.ensure(compile::Std {
+            compiler: builder.compiler(builder.top_stage, build.build),
+            target,
+        });
+
+        println!("Generating rfcs book md files ({})", target);
+        let out = build.md_doc_out(target).join("rfcs-book");
+        t!(fs::create_dir_all(&out));
+        t!(fs::remove_dir_all(&out));
+        let mut cmd = builder.tool_cmd(Tool::RfcsBookGen);
+        cmd.arg(build.src.join("src"));
+        cmd.arg(out);
+
+        build.run(&mut cmd);
     }
 }
 

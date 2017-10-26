@@ -244,6 +244,7 @@ tool!(
     Rustbook, "src/tools/rustbook", "rustbook", Mode::Librustc;
     ErrorIndex, "src/tools/error_index_generator", "error_index_generator", Mode::Librustc;
     UnstableBookGen, "src/tools/unstable-book-gen", "unstable-book-gen", Mode::Libstd;
+    RfcsBookGen, "src/tools/rfcs-book-gen", "rfcs-book-gen", Mode::Libstd;
     Tidy, "src/tools/tidy", "tidy", Mode::Libstd;
     Linkchecker, "src/tools/linkchecker", "linkchecker", Mode::Libstd;
     CargoTest, "src/tools/cargotest", "cargotest", Mode::Libstd;
