@@ -748,7 +748,7 @@ impl Step for RfcsBookGen {
         t!(fs::create_dir_all(&out));
         t!(fs::remove_dir_all(&out));
         let mut cmd = builder.tool_cmd(Tool::RfcsBookGen);
-        cmd.arg(build.src.join("src"));
+        cmd.arg(build.src.join("src").join("doc").join("rfcs").join("text"));
         cmd.arg(out);
 
         build.run(&mut cmd);

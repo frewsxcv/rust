@@ -42,6 +42,6 @@
 [submodule "src/tools/miri"]
 	path = src/tools/miri
 	url = https://github.com/solson/miri.git
-[submodule "src/tools/rfcs"]
-	path = src/tools/rfcs
+[submodule "src/doc/rfcs"]
+	path = src/doc/rfcs
 	url = git@github.com:rust-lang/rfcs.git
