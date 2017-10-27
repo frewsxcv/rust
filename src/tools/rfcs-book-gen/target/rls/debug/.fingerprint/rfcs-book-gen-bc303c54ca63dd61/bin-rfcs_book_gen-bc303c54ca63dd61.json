@@ -1,0 +1,1 @@
+{"rustc":6682166688848153924,"features":"[]","target":4196356200970985047,"profile":8900019864898235906,"deps":[],"local":[{"MtimeBased":[[1509053207,323305458],"/Users/corey/dev/rust/src/tools/rfcs-book-gen/target/rls/debug/.fingerprint/rfcs-book-gen-bc303c54ca63dd61/dep-bin-rfcs_book_gen-bc303c54ca63dd61"]}],"rustflags":["--error-format=json"]}

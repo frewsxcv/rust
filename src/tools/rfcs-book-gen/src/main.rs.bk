@@ -1,0 +1,24 @@
+use std::{env, error, fs, path};
+
+fn run<S, D>(src_path: S, dest_path: D) -> Result<(), Box<error::Error>>
+    where
+        S: AsRef<path::Path>,
+        D: AsRef<path::Path>,
+{
+    for i in fs::read_dir(src_path.as_ref())? {
+        panic!("{:?}", i?);
+    }
+    Ok(())
+}
+
+fn main() {
+    let args = env::args_os();
+
+    let src_path_str = &args.skip(1).next().expect("source path required");
+    let src_path = path::Path::new(src_path_str);
+
+    let dest_path_str = args.next().expect("destination path required");
+    let dest_path = path::Path::new(dest_path_str).join("src");
+
+    run(src_path);
+}
