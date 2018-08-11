@@ -182,7 +182,7 @@ fn test_push_bytes() {
     let mut s = String::from("ABC");
     unsafe {
         let mv = s.as_mut_vec();
-        mv.extend_from_slice(&[b'D']);
+        mv.extend(&[b'D']);
     }
     assert_eq!(s, "ABCD");
 }

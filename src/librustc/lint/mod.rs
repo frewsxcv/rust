@@ -319,7 +319,7 @@ macro_rules! declare_combined_late_lint_pass {
         impl LintPass for $name {
             fn get_lints(&self) -> LintArray {
                 let mut lints = Vec::new();
-                $(lints.extend_from_slice(&self.$passes.get_lints());)*
+                $(lints.extend(&self.$passes.get_lints());)*
                 lints
             }
         }

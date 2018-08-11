@@ -218,7 +218,7 @@ impl Wtf8Buf {
         };
         let mut bytes = [0; 4];
         let bytes = c.encode_utf8(&mut bytes).as_bytes();
-        self.bytes.extend_from_slice(bytes)
+        self.bytes.extend(bytes)
     }
 
     #[inline]
@@ -267,7 +267,7 @@ impl Wtf8Buf {
     /// Append a UTF-8 slice at the end of the string.
     #[inline]
     pub fn push_str(&mut self, other: &str) {
-        self.bytes.extend_from_slice(other.as_bytes())
+        self.bytes.extend(other.as_bytes())
     }
 
     /// Append a WTF-8 slice at the end of the string.
@@ -286,9 +286,9 @@ impl Wtf8Buf {
                 // 4 bytes for the supplementary code point
                 self.bytes.reserve(4 + other_without_trail_surrogate.len());
                 self.push_char(decode_surrogate_pair(lead, trail));
-                self.bytes.extend_from_slice(other_without_trail_surrogate);
+                self.bytes.extend(other_without_trail_surrogate);
             }
-            _ => self.bytes.extend_from_slice(&other.bytes)
+            _ => self.bytes.extend(&other.bytes)
         }
     }
 
@@ -564,18 +564,18 @@ impl Wtf8 {
         };
         let wtf8_bytes = &self.bytes;
         let mut utf8_bytes = Vec::with_capacity(self.len());
-        utf8_bytes.extend_from_slice(&wtf8_bytes[..surrogate_pos]);
-        utf8_bytes.extend_from_slice(UTF8_REPLACEMENT_CHARACTER.as_bytes());
+        utf8_bytes.extend(&wtf8_bytes[..surrogate_pos]);
+        utf8_bytes.extend(UTF8_REPLACEMENT_CHARACTER.as_bytes());
         let mut pos = surrogate_pos + 3;
         loop {
             match self.next_surrogate(pos) {
                 Some((surrogate_pos, _)) => {
-                    utf8_bytes.extend_from_slice(&wtf8_bytes[pos .. surrogate_pos]);
-                    utf8_bytes.extend_from_slice(UTF8_REPLACEMENT_CHARACTER.as_bytes());
+                    utf8_bytes.extend(&wtf8_bytes[pos .. surrogate_pos]);
+                    utf8_bytes.extend(UTF8_REPLACEMENT_CHARACTER.as_bytes());
                     pos = surrogate_pos + 3;
                 },
                 None => {
-                    utf8_bytes.extend_from_slice(&wtf8_bytes[pos..]);
+                    utf8_bytes.extend(&wtf8_bytes[pos..]);
                     return Cow::Owned(unsafe { String::from_utf8_unchecked(utf8_bytes) })
                 }
             }

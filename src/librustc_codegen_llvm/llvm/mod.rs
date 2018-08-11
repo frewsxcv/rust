@@ -105,7 +105,7 @@ pub unsafe extern "C" fn LLVMRustStringWriteImpl(sr: &RustString,
                                                  size: size_t) {
     let slice = slice::from_raw_parts(ptr as *const u8, size as usize);
 
-    sr.bytes.borrow_mut().extend_from_slice(slice);
+    sr.bytes.borrow_mut().extend(slice);
 }
 
 pub fn SetInstructionCallConv(instr: &'a Value, cc: CallConv) {

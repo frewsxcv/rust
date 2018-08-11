@@ -803,7 +803,7 @@ impl String {
     #[inline]
     #[stable(feature = "rust1", since = "1.0.0")]
     pub fn push_str(&mut self, string: &str) {
-        self.vec.extend_from_slice(string.as_bytes())
+        self.vec.extend(string.as_bytes())
     }
 
     /// Returns this `String`'s capacity, in bytes.
@@ -1065,7 +1065,7 @@ impl String {
     pub fn push(&mut self, ch: char) {
         match ch.len_utf8() {
             1 => self.vec.push(ch as u8),
-            _ => self.vec.extend_from_slice(ch.encode_utf8(&mut [0; 4]).as_bytes()),
+            _ => self.vec.extend(ch.encode_utf8(&mut [0; 4]).as_bytes()),
         }
     }
 

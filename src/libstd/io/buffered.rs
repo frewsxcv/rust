@@ -1157,7 +1157,7 @@ mod tests {
 
         impl<'a> Write for FailFlushWriter<'a> {
             fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
-                self.0.extend_from_slice(buf);
+                self.0.extend(buf);
                 Ok(buf.len())
             }
             fn flush(&mut self) -> io::Result<()> {

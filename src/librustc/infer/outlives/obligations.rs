@@ -479,7 +479,7 @@ where
             self.declared_generic_bounds_from_env(GenericKind::Projection(projection_ty));
 
         declared_bounds
-            .extend_from_slice(&self.declared_projection_bounds_from_trait(projection_ty));
+            .extend(&self.declared_projection_bounds_from_trait(projection_ty));
 
         declared_bounds
     }

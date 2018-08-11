@@ -750,7 +750,7 @@ fn mk_test_desc_and_fn_rec(cx: &TestCtxt, test: &Test) -> P<ast::Expr> {
             diag.bug("expected to find top-level re-export name, but found None");
         }
     };
-    visible_path.extend_from_slice(&test.path[..]);
+    visible_path.extend(&test.path[..]);
 
     // Rather than directly give the test function to the test
     // harness, we create a wrapper like one of the following:

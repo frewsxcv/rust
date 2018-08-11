@@ -369,8 +369,8 @@ bitxor_impl! { bool usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 }
 ///         // Rotate the vector by `rhs` places.
 ///         let (a, b) = self.vec.split_at(rhs);
 ///         let mut spun_vector: Vec<T> = vec![];
-///         spun_vector.extend_from_slice(b);
-///         spun_vector.extend_from_slice(a);
+///         spun_vector.extend(b);
+///         spun_vector.extend(a);
 ///         SpinVector { vec: spun_vector }
 ///     }
 /// }
@@ -478,8 +478,8 @@ shl_impl_all! { u8 u16 u32 u64 u128 usize i8 i16 i32 i64 isize i128 }
 ///         // Rotate the vector by `rhs` places.
 ///         let (a, b) = self.vec.split_at(self.vec.len() - rhs);
 ///         let mut spun_vector: Vec<T> = vec![];
-///         spun_vector.extend_from_slice(b);
-///         spun_vector.extend_from_slice(a);
+///         spun_vector.extend(b);
+///         spun_vector.extend(a);
 ///         SpinVector { vec: spun_vector }
 ///     }
 /// }

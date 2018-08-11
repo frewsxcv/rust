@@ -1318,7 +1318,7 @@ mod tests {
         m.append(&mut n);
         check_links(&m);
         let mut sum = v;
-        sum.extend_from_slice(&u);
+        sum.extend(&u);
         assert_eq!(sum.len(), m.len());
         for elt in sum {
             assert_eq!(m.pop_front(), Some(elt))

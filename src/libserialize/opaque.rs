@@ -32,7 +32,7 @@ impl Encoder {
     }
 
     pub fn emit_raw_bytes(&mut self, s: &[u8]) {
-        self.data.extend_from_slice(s);
+        self.data.extend(s);
     }
 }
 

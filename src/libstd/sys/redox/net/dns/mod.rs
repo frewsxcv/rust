@@ -77,7 +77,7 @@ impl Dns {
 
         macro_rules! push_n16 {
             ($value:expr) => {
-                data.extend_from_slice(n16::from($value).as_bytes());
+                data.extend(n16::from($value).as_bytes());
             };
         };
 
@@ -91,7 +91,7 @@ impl Dns {
         for query in self.queries.iter() {
             for part in query.name.split('.') {
                 push_u8!(part.len() as u8);
-                data.extend_from_slice(part.as_bytes());
+                data.extend(part.as_bytes());
             }
             push_u8!(0);
             push_n16!(query.q_type);

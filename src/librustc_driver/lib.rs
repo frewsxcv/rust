@@ -1709,18 +1709,18 @@ pub fn diagnostics_registry() -> errors::registry::Registry {
     use errors::registry::Registry;
 
     let mut all_errors = Vec::new();
-    all_errors.extend_from_slice(&rustc::DIAGNOSTICS);
-    all_errors.extend_from_slice(&rustc_typeck::DIAGNOSTICS);
-    all_errors.extend_from_slice(&rustc_resolve::DIAGNOSTICS);
-    all_errors.extend_from_slice(&rustc_privacy::DIAGNOSTICS);
+    all_errors.extend(&rustc::DIAGNOSTICS);
+    all_errors.extend(&rustc_typeck::DIAGNOSTICS);
+    all_errors.extend(&rustc_resolve::DIAGNOSTICS);
+    all_errors.extend(&rustc_privacy::DIAGNOSTICS);
     // FIXME: need to figure out a way to get these back in here
-    // all_errors.extend_from_slice(get_codegen_backend(sess).diagnostics());
-    all_errors.extend_from_slice(&rustc_codegen_utils::DIAGNOSTICS);
-    all_errors.extend_from_slice(&rustc_metadata::DIAGNOSTICS);
-    all_errors.extend_from_slice(&rustc_passes::DIAGNOSTICS);
-    all_errors.extend_from_slice(&rustc_plugin::DIAGNOSTICS);
-    all_errors.extend_from_slice(&rustc_mir::DIAGNOSTICS);
-    all_errors.extend_from_slice(&syntax::DIAGNOSTICS);
+    // all_errors.extend(get_codegen_backend(sess).diagnostics());
+    all_errors.extend(&rustc_codegen_utils::DIAGNOSTICS);
+    all_errors.extend(&rustc_metadata::DIAGNOSTICS);
+    all_errors.extend(&rustc_passes::DIAGNOSTICS);
+    all_errors.extend(&rustc_plugin::DIAGNOSTICS);
+    all_errors.extend(&rustc_mir::DIAGNOSTICS);
+    all_errors.extend(&syntax::DIAGNOSTICS);
 
     Registry::new(&all_errors)
 }

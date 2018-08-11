@@ -875,7 +875,7 @@ pub fn run_tests_console(opts: &TestOpts, tests: Vec<TestDescAndFn>) -> io::Resu
                     TrFailedMsg(msg) => {
                         st.failed += 1;
                         let mut stdout = stdout;
-                        stdout.extend_from_slice(format!("note: {}", msg).as_bytes());
+                        stdout.extend(format!("note: {}", msg).as_bytes());
                         st.failures.push((test, stdout));
                     }
                 }

@@ -48,7 +48,7 @@ pub fn codegen_inline_asm(
         }
     }
     if !indirect_outputs.is_empty() {
-        indirect_outputs.extend_from_slice(&inputs);
+        indirect_outputs.extend(&inputs);
         inputs = indirect_outputs;
     }
 

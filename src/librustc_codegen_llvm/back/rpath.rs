@@ -38,7 +38,7 @@ pub fn get_rpath_flags(config: &mut RPathConfig) -> Vec<String> {
     let libs = config.used_crates.clone();
     let libs = libs.iter().filter_map(|&(_, ref l)| l.option()).collect::<Vec<_>>();
     let rpaths = get_rpaths(config, &libs);
-    flags.extend_from_slice(&rpaths_to_flags(&rpaths));
+    flags.extend(&rpaths_to_flags(&rpaths));
 
     // Use DT_RUNPATH instead of DT_RPATH if available
     if config.linker_is_gnu {
@@ -88,7 +88,7 @@ fn get_rpaths(config: &mut RPathConfig, libs: &[PathBuf]) -> Vec<String> {
     log_rpaths("fallback", &fallback_rpaths);
 
     let mut rpaths = rel_rpaths;
-    rpaths.extend_from_slice(&fallback_rpaths);
+    rpaths.extend(&fallback_rpaths);
 
     // Remove duplicates
     let rpaths = minimize_rpaths(&rpaths);

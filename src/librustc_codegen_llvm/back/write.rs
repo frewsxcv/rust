@@ -2065,7 +2065,7 @@ pub fn run_assembler(cgcx: &CodegenContext, handler: &Handler, assembly: &Path, 
         Ok(prog) => {
             if !prog.status.success() {
                 let mut note = prog.stderr.clone();
-                note.extend_from_slice(&prog.stdout);
+                note.extend(&prog.stdout);
 
                 handler.struct_err(&format!("linking with `{}` failed: {}",
                                             pname.display(),

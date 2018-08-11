@@ -1155,7 +1155,7 @@ fn specialize<'p, 'a: 'p, 'tcx: 'a>(
     debug!("specialize({:#?}, {:#?}) = {:#?}", r[0], wild_patterns, head);
 
     head.map(|mut head| {
-        head.extend_from_slice(&r[1 ..]);
+        head.extend(&r[1 ..]);
         head
     })
 }

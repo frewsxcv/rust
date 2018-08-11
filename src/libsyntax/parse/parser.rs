@@ -1989,7 +1989,7 @@ impl<'a> Parser<'a> {
             _ => false,
         };
         let check_args_start = |this: &mut Self| {
-            this.expected_tokens.extend_from_slice(
+            this.expected_tokens.extend(
                 &[TokenType::Token(token::Lt), TokenType::Token(token::OpenDelim(token::Paren))]
             );
             is_args_start(&this.token)

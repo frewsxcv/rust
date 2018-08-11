@@ -788,7 +788,7 @@ fn link_natively(sess: &Session,
             }
             if !prog.status.success() {
                 let mut output = prog.stderr.clone();
-                output.extend_from_slice(&prog.stdout);
+                output.extend(&prog.stdout);
                 sess.struct_err(&format!("linking with `{}` failed: {}",
                                          pname.display(),
                                          prog.status))

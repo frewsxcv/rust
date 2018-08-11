@@ -53,25 +53,25 @@ pub fn encode(identifier: &str, bytecode: &[u8]) -> Vec<u8> {
     let mut encoded = Vec::new();
 
     // Start off with the magic string
-    encoded.extend_from_slice(RLIB_BYTECODE_OBJECT_MAGIC);
+    encoded.extend(RLIB_BYTECODE_OBJECT_MAGIC);
 
     // Next up is the version
-    encoded.extend_from_slice(&[RLIB_BYTECODE_OBJECT_VERSION, 0, 0, 0]);
+    encoded.extend(&[RLIB_BYTECODE_OBJECT_VERSION, 0, 0, 0]);
 
     // Next is the LLVM module identifier length + contents
     let identifier_len = identifier.len();
-    encoded.extend_from_slice(&[
+    encoded.extend(&[
         (identifier_len >>  0) as u8,
         (identifier_len >>  8) as u8,
         (identifier_len >> 16) as u8,
         (identifier_len >> 24) as u8,
     ]);
-    encoded.extend_from_slice(identifier.as_bytes());
+    encoded.extend(identifier.as_bytes());
 
     // Next is the LLVM module deflate compressed, prefixed with its length. We
     // don't know its length yet, so fill in 0s
     let deflated_size_pos = encoded.len();
-    encoded.extend_from_slice(&[0, 0, 0, 0, 0, 0, 0, 0]);
+    encoded.extend(&[0, 0, 0, 0, 0, 0, 0, 0]);
 
     let before = encoded.len();
     DeflateEncoder::new(&mut encoded, Compression::fast())

@@ -1261,11 +1261,11 @@ fn read_until<R: BufRead + ?Sized>(r: &mut R, delim: u8, buf: &mut Vec<u8>)
             };
             match memchr::memchr(delim, available) {
                 Some(i) => {
-                    buf.extend_from_slice(&available[..i + 1]);
+                    buf.extend(&available[..i + 1]);
                     (true, i + 1)
                 }
                 None => {
-                    buf.extend_from_slice(available);
+                    buf.extend(available);
                     (false, available.len())
                 }
             }
@@ -2218,7 +2218,7 @@ mod tests {
                 let buf2 = br2.fill_buf().unwrap();
                 let minlen = if buf1.len() < buf2.len() { buf1.len() } else { buf2.len() };
                 assert_eq!(buf1[..minlen], buf2[..minlen]);
-                cat.extend_from_slice(&buf1[..minlen]);
+                cat.extend(&buf1[..minlen]);
                 minlen
             };
             if consume == 0 {

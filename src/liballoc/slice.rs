@@ -165,7 +165,7 @@ mod hack {
         where T: Clone
     {
         let mut vector = Vec::with_capacity(s.len());
-        vector.extend_from_slice(s);
+        vector.extend(s);
         vector
     }
 }
@@ -560,7 +560,7 @@ impl<T: Clone, V: Borrow<[T]>> SliceConcatExt<T> for [V] {
         let size = self.iter().fold(0, |acc, v| acc + v.borrow().len());
         let mut result = Vec::with_capacity(size);
         for v in self {
-            result.extend_from_slice(v.borrow())
+            result.extend(v.borrow())
         }
         result
     }
@@ -573,11 +573,11 @@ impl<T: Clone, V: Borrow<[T]>> SliceConcatExt<T> for [V] {
         };
         let size = self.iter().fold(0, |acc, v| acc + v.borrow().len());
         let mut result = Vec::with_capacity(size + self.len());
-        result.extend_from_slice(first.borrow());
+        result.extend(first.borrow());
 
         for v in iter {
             result.push(sep.clone());
-            result.extend_from_slice(v.borrow())
+            result.extend(v.borrow())
         }
         result
     }
@@ -628,7 +628,7 @@ impl<T: Clone> ToOwned for [T] {
 
         // target.len <= self.len due to the truncate above, so the
         // slice here is always in-bounds.
-        target.extend_from_slice(&self[len..]);
+        target.extend(&self[len..]);
     }
 }
 

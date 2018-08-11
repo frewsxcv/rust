@@ -280,7 +280,7 @@ fn vec_write(pos_mut: &mut u64, vec: &mut Vec<u8>, buf: &[u8]) -> io::Result<usi
         let space = vec.len() - pos;
         let (left, right) = buf.split_at(cmp::min(space, buf.len()));
         vec[pos..pos + left.len()].copy_from_slice(left);
-        vec.extend_from_slice(right);
+        vec.extend(right);
     }
 
     // Bump us forward

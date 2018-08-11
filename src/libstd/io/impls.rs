@@ -209,7 +209,7 @@ impl<'a> Read for &'a [u8] {
 
     #[inline]
     fn read_to_end(&mut self, buf: &mut Vec<u8>) -> io::Result<usize> {
-        buf.extend_from_slice(*self);
+        buf.extend(*self);
         let len = self.len();
         *self = &self[len..];
         Ok(len)
@@ -260,13 +260,13 @@ impl<'a> Write for &'a mut [u8] {
 impl Write for Vec<u8> {
     #[inline]
     fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
-        self.extend_from_slice(buf);
+        self.extend(buf);
         Ok(buf.len())
     }
 
     #[inline]
     fn write_all(&mut self, buf: &[u8]) -> io::Result<()> {
-        self.extend_from_slice(buf);
+        self.extend(buf);
         Ok(())
     }
 

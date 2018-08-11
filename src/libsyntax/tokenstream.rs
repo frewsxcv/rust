@@ -218,9 +218,9 @@ impl TokenStream {
             if let Some((pos, comma, sp)) = suggestion {
                 let mut new_slice = vec![];
                 let parts = slice.split_at(pos + 1);
-                new_slice.extend_from_slice(parts.0);
+                new_slice.extend(parts.0);
                 new_slice.push(comma);
-                new_slice.extend_from_slice(parts.1);
+                new_slice.extend(parts.1);
                 let slice = RcSlice::new(new_slice);
                 return Some((TokenStream { kind: TokenStreamKind::Stream(slice) }, sp));
             }

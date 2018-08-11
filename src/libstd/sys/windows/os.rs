@@ -211,10 +211,10 @@ pub fn join_paths<I, T>(paths: I) -> Result<OsString, JoinPathsError>
             return Err(JoinPathsError)
         } else if v.contains(&sep) {
             joined.push(b'"' as u16);
-            joined.extend_from_slice(&v[..]);
+            joined.extend(&v[..]);
             joined.push(b'"' as u16);
         } else {
-            joined.extend_from_slice(&v[..]);
+            joined.extend(&v[..]);
         }
     }
 

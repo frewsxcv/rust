@@ -175,7 +175,7 @@ where
     let mut result = Vec::with_capacity(len);
     assert!(result.capacity() >= len);
 
-    result.extend_from_slice(first.borrow().as_ref());
+    result.extend(first.borrow().as_ref());
 
     unsafe {
         {

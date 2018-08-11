@@ -199,7 +199,7 @@ impl WasmEncoder {
 
     fn bytes(&mut self, val: &[u8]) {
         self.u32(val.len() as u32);
-        self.data.extend_from_slice(val);
+        self.data.extend(val);
     }
 
     fn str(&mut self, val: &str) {

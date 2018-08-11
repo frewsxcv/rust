@@ -3903,7 +3903,7 @@ impl<'a> LoweringContext<'a> {
                 }
                 // merge attributes into the inner expression.
                 let mut attrs = e.attrs.clone();
-                attrs.extend::<Vec<_>>(ex.attrs.into());
+                attrs._>>(ex.attrs.into());
                 ex.attrs = attrs;
                 return ex;
             }

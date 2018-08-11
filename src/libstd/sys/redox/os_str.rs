@@ -118,7 +118,7 @@ impl Buf {
     }
 
     pub fn push_slice(&mut self, s: &Slice) {
-        self.inner.extend_from_slice(&s.inner)
+        self.inner.extend(&s.inner)
     }
 
     #[inline]
